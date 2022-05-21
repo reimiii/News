@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminLoginController;
-
 use App\Http\Controllers\Admin\AdminAdsController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 
 // FrontRoute
 use App\Http\Controllers\Front\HomeController;
@@ -61,6 +61,15 @@ Route::middleware(['admin:admin'])->group(function () {
   Route::post('admin/ads/side-ads-update/{id}', [AdminAdsController::class, 'side_ad_update'])->name('admin_ads_side_update');
 
   // end side
+
+  // category
+  Route::get('admin/category', [AdminCategoryController::class, 'show'])->name('admin_category_show');
+  Route::get('admin/category/create', [AdminCategoryController::class, 'create'])->name('admin_category_create');
+  Route::post('admin/category/store', [AdminCategoryController::class, 'store'])->name('admin_category_store');
+  Route::get('admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin_category_edit');
+  Route::post('admin/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin_category_update');
+  Route::get('admin/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('admin_category_delete');
+
 });
 
 // login
@@ -78,9 +87,8 @@ Route::post('/admin/forgot-password-submit', [AdminLoginController::class, 'forg
 Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name(
   'admin_reset_password'
 );
-Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset_password_submit'])->name(
-  'admin_reset_password_submit'
-);
+Route::post('/admin/reset-password-submit',
+[AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
 
 // endreset password
 // End Admin
