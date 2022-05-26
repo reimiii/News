@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminAdsController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
 
 // FrontRoute
 use App\Http\Controllers\Front\HomeController;
@@ -19,6 +20,26 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // end depannya
+
+// login
+
+Route::get('admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
+Route::post('/admin/login-submit', [AdminLoginController::class, 'login_submit'])->name('admin_login_submit');
+
+// endloginn
+
+// reset password
+Route::get('/admin/forgot-password', [AdminLoginController::class, 'forget_password'])->name('admin_forget_password');
+Route::post('/admin/forgot-password-submit', [AdminLoginController::class, 'forget_password_submit'])->name(
+  'admin_forget_password_submit'
+);
+Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name(
+  'admin_reset_password'
+);
+Route::post('/admin/reset-password-submit',
+[AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
+
+// endreset password
 
 // Admin
 Route::middleware(['admin:admin'])->group(function () {
@@ -63,32 +84,32 @@ Route::middleware(['admin:admin'])->group(function () {
   // end side
 
   // category
-  Route::get('admin/category', [AdminCategoryController::class, 'show'])->name('admin_category_show');
-  Route::get('admin/category/create', [AdminCategoryController::class, 'create'])->name('admin_category_create');
-  Route::post('admin/category/store', [AdminCategoryController::class, 'store'])->name('admin_category_store');
-  Route::get('admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin_category_edit');
-  Route::post('admin/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin_category_update');
-  Route::get('admin/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('admin_category_delete');
+  Route::get('admin/news/category', [AdminCategoryController::class, 'show'])->name('admin_category_show');
+  Route::get('admin/news/category/create', [AdminCategoryController::class, 'create'])->name('admin_category_create');
+  Route::post('admin/news/category/store', [AdminCategoryController::class, 'store'])->name('admin_category_store');
+  Route::get('admin/news/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin_category_edit');
+  Route::post('admin/news/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin_category_update');
+  Route::get('admin/news/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('admin_category_delete');
+  // end category
+
+  // sub category
+  Route::get('admin/news/sub-category', [SubCategoryController::class, 'show'])->name('admin_sub_category_show');
+  Route::get('admin/news/sub-category/create', [SubCategoryController::class, 'create'])->name('admin_sub_category_create');
+  Route::post('admin/news/sub-category/store', [SubCategoryController::class, 'store'])->name('admin_sub_category_store');
+  Route::get('admin/news/sub-category/edit/{id}', [SubCategoryController::class, 'edit'])->name('admin_sub_category_edit');
+  Route::post('admin/news/sub-category/update/{id}', [SubCategoryController::class, 'update'])->name('admin_sub_category_update');
+  Route::get('admin/news/sub-category/delete/{id}', [SubCategoryController::class, 'delete'])->name('admin_sub_category_delete');
+
+  // post
+
+
+
 
 });
 
-// login
+Route::fallback(function () {
+  return view('errors.404');
+});
 
-Route::get('admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
-Route::post('/admin/login-submit', [AdminLoginController::class, 'login_submit'])->name('admin_login_submit');
 
-// endloginn
-
-// reset password
-Route::get('/admin/forgot-password', [AdminLoginController::class, 'forget_password'])->name('admin_forget_password');
-Route::post('/admin/forgot-password-submit', [AdminLoginController::class, 'forget_password_submit'])->name(
-  'admin_forget_password_submit'
-);
-Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name(
-  'admin_reset_password'
-);
-Route::post('/admin/reset-password-submit',
-[AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
-
-// endreset password
 // End Admin

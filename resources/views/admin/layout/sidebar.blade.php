@@ -14,7 +14,7 @@
           <span>Dashboard</span></a></li>
 
       {{-- Ads --}}
-      <li class="nav-item dropdown {{ (request()->is('admin/ads/*')) ? 'active' : '' }}">
+      <li class="nav-item dropdown {{ (request()->is('admin/ads*')) ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown"><i class="fas fa-recycle"></i><span>Ads</span></a>
         <ul class="dropdown-menu">
           <li class="{{ (request()->is('admin/ads/top-ads*')) ? 'active' : '' }}"><a class="nav-link"
@@ -31,16 +31,18 @@
       </li>
 
       {{-- News --}}
-      <li class="nav-item dropdown {{ (request()->is('admin/category*', '')) ? 'active' : '' }}">
+      <li class="nav-item dropdown {{ (request()->is('admin/news*')) ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown"><i class="fas fa-recycle"></i><span>News</span></a>
         <ul class="dropdown-menu">
-          <li class="{{ (request()->is('admin/category*')) ? 'active' : '' }}"><a class="nav-link"
+          <li class="{{ (request()->is('admin/news/category*')) ? 'active' : '' }}"><a class="nav-link"
               href="{{ route('admin_category_show') }}">
               <i class="fas fa-angle-right"></i> Category</a></li>
-          <li class="{{ (request()->is('admin/subcategory')) ? 'active' : '' }}">
-            <a class="nav-link" href="">
-              <i class="fas fa-angle-right"></i> SubCategory</a>
+
+          <li class="{{ (request()->is('admin/news/sub-category*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin_sub_category_show') }}">
+              <i class="fas fa-angle-right"></i> Sub-Category</a>
           </li>
+
           <li class="{{ (request()->is('admin/subcategory')) ? 'active' : '' }}">
             <a class="nav-link" href="">
               <i class="fas fa-angle-right"></i> Post</a>
