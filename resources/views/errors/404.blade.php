@@ -187,8 +187,11 @@
         A wild 404-PAGE appeared!
       </div>
       <div class="btn _s">
+        {{-- <a href="{{ route('home') }}" class="btn _s">OK</a> --}}
         <div class="dash">
-          <a href="{{ route('home') }}">OK</a>
+          <a href="{{ route('home') }}" class="">
+            OKEEE
+          </a>
         </div>
       </div>
     </div>

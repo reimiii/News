@@ -30,7 +30,7 @@ class SubCategoryController extends Controller
     $request->validate([
       'category_id' => 'required',
       'show_on_menu' => 'required',
-      'sub_category_name' => 'required|unique:sub_categories,sub_category_name',
+      'sub_category_name' => 'required',
       'sub_category_order' => 'required|integer',
     ],[
       'category_id.required' => 'Category is required',
