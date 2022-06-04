@@ -1,6 +1,8 @@
 @extends('front.layout.app')
 
 @section('main_content')
+
+@if($setting->news_ticker_status == 'Show')
 <div class="news-ticker-item">
   <div class="container">
     <div class="row">
@@ -9,11 +11,16 @@
           <div class="acme-news-ticker-label">Latest News</div>
           <div class="acme-news-ticker-box">
             <ul class="my-news-ticker">
-              <li><a href="">Helicopter crashes into waves off crowded Miami beach</a></li>
-              <li><a href="">Canadian police appear to end protesters' siege of Ottawa</a></li>
-              <li><a href="">Speedskating champ chooses sportsmanship over Olympic medal</a></li>
-              <li><a href="">USDA head: US farmers to help if Ukraine exports threatened</a></li>
-              <li><a href="">Actor Lindsey Pearlman found dead after going missing in LA</a></li>
+              @php $i=0; @endphp
+              @foreach($post as $p)
+              @php $i++; @endphp
+              @if($i > $setting->news_ticker_total)
+              @break
+              @endif
+              <li>
+                <a href="{{ route('news_detail',$p->id) }}">{{ $p->post_title }}</a>
+              </li>
+              @endforeach
             </ul>
           </div>
         </div>
@@ -21,79 +28,118 @@
     </div>
   </div>
 </div>
+@endif
 
 <div class="home-main">
   <div class="container">
     <div class="row g-2">
       <div class="col-lg-8 col-md-12 left">
+        @php $i=0; @endphp
+        @foreach($post as $key)
+        @php $i++; @endphp
+        @if ($i > 1)
+        @break
+        @endif
         <div class="inner">
           <div class="photo">
             <div class="bg"></div>
-            <img src="uploads/n1.jpg" alt="">
+            <img src="{{ asset('uploads/'.$key->post_photo) }}" alt="">
             <div class="text">
               <div class="text-inner">
                 <div class="category">
                   <span class="badge bg-success badge-sm">Politics</span>
                 </div>
-                <h2><a href="">Top five ranked teams in world lined up to take part in competition</a></h2>
+                <h2><a href="{{ route('news_detail',$key->id) }}">{{ $key->post_title }}</a></h2>
                 <div class="date-user">
                   <div class="user">
-                    <a href="">Paul David</a>
+                    @if($key->author_id == 0)
+                    @php
+                    $user_data = App\Models\Admin::where('id', $key->admin_id)->first();
+                    @endphp
+
+                    {{-- // dd($user_data->name); --}}
+                    @else
+                    {
+                    {{-- // Nanti dulu --}}
+                    }
+                    @endif
+                    {{ $user_data->name }}
                   </div>
                   <div class="date">
-                    <a href="">10 Jan, 2022</a>
+                    @php
+
+                    $time = strtotime($key->updated_at);
+                    $final_time = date('d F Y', $time);
+
+                    @endphp
+                    {{ $final_time }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        @endforeach
       </div>
       <div class="col-lg-4 col-md-12">
+        @php $i=0; @endphp
+        @foreach($post as $key)
+        @php $i++; @endphp
+        @if ($i == 1)
+        @continue
+        @endif
+        @if ($i > 3)
+        @break
+        @endif
         <div class="inner inner-right">
           <div class="photo">
             <div class="bg"></div>
-            <img src="uploads/n2.jpg" alt="">
+            <img src="{{ asset('uploads/'.$key->post_photo) }}" alt="">
             <div class="text">
               <div class="text-inner">
                 <div class="category">
-                  <span class="badge bg-success badge-sm">Politics</span>
+                  <span class="badge bg-success badge-sm">
+                    {{ $key->rSubCategory->sub_category_name }}
+                  </span>
                 </div>
-                <h2><a href="">Top five ranked teams in world lined up to take part in competition</a></h2>
+                <h2>
+                  <a href="{{ route('news_detail',$key->id) }}">
+                    {{ $key->post_title }}
+                  </a>
+                </h2>
                 <div class="date-user">
                   <div class="user">
-                    <a href="">Paul David</a>
+                    @if($key->author_id == 0)
+                    @php
+                    $user_data = App\Models\Admin::where('id', $key->admin_id)->first();
+                    @endphp
+
+                    {{-- // dd($user_data->name); --}}
+                    @else
+                    {
+                    {{-- // Nanti dulu --}}
+                    }
+                    @endif
+                    {{ $user_data->name }}
                   </div>
                   <div class="date">
-                    <a href="">10 Jan, 2022</a>
+                    @php
+
+                    $time = strtotime($key->updated_at);
+                    $final_time = date('d F Y', $time);
+
+                    @endphp
+                    {{ $final_time }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="inner inner-right">
-          <div class="photo">
-            <div class="bg"></div>
-            <img src="uploads/n3.jpg" alt="">
-            <div class="text">
-              <div class="text-inner">
-                <div class="category">
-                  <span class="badge bg-success badge-sm">Politics</span>
-                </div>
-                <h2><a href="">Top five ranked teams in world lined up to take part in competition</a></h2>
-                <div class="date-user">
-                  <div class="user">
-                    <a href="">Paul David</a>
-                  </div>
-                  <div class="date">
-                    <a href="">10 Jan, 2022</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        @endforeach
+
       </div>
     </div>
   </div>

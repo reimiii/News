@@ -10,15 +10,20 @@ use App\Http\Controllers\Admin\AdminAdsController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\SettingController;
 
 // FrontRoute
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\AboutController;
+use App\Http\Controllers\Front\NewsPostController;
 
 // Depannya
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('about', [AboutController::class, 'index'])->name('about');
+
+// detail
+Route::get('news/{id}', [NewsPostController::class, 'detail'])->name('news_detail');
 
 // end depannya
 
@@ -48,6 +53,10 @@ Route::middleware(['admin:admin'])->group(function () {
 
   // AdminHomeController
   Route::get('admin', [AdminHomeController::class, 'index'])->name('admin_home');
+
+  // SettingController
+  Route::get('setting', [SettingController::class, 'index'])->name('admin_setting');
+  Route::post('setting/update', [SettingController::class, 'update'])->name('admin_update_setting');
 
   // AdminLoginController
   Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');

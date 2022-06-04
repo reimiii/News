@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
           AdsSeeder::class,
           AdminSeeder::class,
           SomePostSeeder::class,
+          SettingSeeder::class,
         ]);
     }
 }

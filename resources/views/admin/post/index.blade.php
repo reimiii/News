@@ -34,7 +34,7 @@
                     <img src="{{ asset('uploads/'.$row->post_photo) }}" alt="" width="100">
                   </td>
                   <td>{{ $row->post_title }}</td>
-                  {{-- <td>{{ $row->post_detail }}</td> --}}
+                  {{-- <td>{{ strip_tags($row->post_detail) }}</td> --}}
                   <td>
                     {{ $row->rSubCategory->sub_category_name }}
                   </td>

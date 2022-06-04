@@ -31,6 +31,8 @@
               <input type="text" class="form-control @error('sub_category_name') is-invalid  @enderror"
                 name="sub_category_name" value="{{ old('sub_category_name') }}">
             </div>
+
+
             <div class="form-group mb-3">
               <label>Show on Menu?</label>
               <select name="show_on_menu" class="form-control @error('show_on_menu') is-invalid @enderror">
@@ -39,6 +41,17 @@
                 <option value="Hide" @selected(old('show_on_menu')=='Hide' )>Hide</option>
               </select>
             </div>
+
+            <div class="form-group mb-3">
+              <label>Show on Home?</label>
+              <select name="show_on_home" class="form-control @error('show_on_home') is-invalid @enderror">
+                <option value="" selected>Please select...</option>
+                <option value="Show" @selected(old('show_on_home')=='Show' )>Show</option>
+                <option value="Hide" @selected(old('show_on_home')=='Hide' )>Hide</option>
+              </select>
+            </div>
+
+
             <div class="form-group mb-3">
               <label>Sub-Category Order*</label>
               <input type="text" class="form-control @error('sub_category_order') is-invalid @enderror"

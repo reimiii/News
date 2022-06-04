@@ -30,6 +30,7 @@ class SubCategoryController extends Controller
     $request->validate([
       'category_id' => 'required',
       'show_on_menu' => 'required',
+      'show_on_home' => 'required',
       'sub_category_name' => 'required',
       'sub_category_order' => 'required|integer',
     ],[
@@ -71,6 +72,7 @@ class SubCategoryController extends Controller
 
     $subcategory->sub_category_name = $request->sub_category_name;
     $subcategory->show_on_menu = $request->show_on_menu;
+    $subcategory->show_on_home = $request->show_on_home;
     $subcategory->save();
 
     return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category created successfully');
@@ -90,7 +92,8 @@ class SubCategoryController extends Controller
     $request->validate([
       'category_id' => 'required',
       'show_on_menu' => 'required',
-      'sub_category_name' => 'required|unique:sub_categories,sub_category_name,'.$id,
+      'show_on_home' => 'required',
+      'sub_category_name' => 'required',
       'sub_category_order' => 'required|integer',
     ],[
       'category_id.required' => 'Category is required',
@@ -100,7 +103,22 @@ class SubCategoryController extends Controller
     $subcategory = SubCategory::where('id',$id)->first();
     $subcategory->category_id = $request->category_id;
     $subcategory->sub_category_name = $request->sub_category_name;
+
+    $check = SubCategory::where([
+      ['category_id', $request->category_id],
+      ['sub_category_name', $request->sub_category_name],
+      ['id', '!=', $id],
+    ])->first();
+
+    if($check)
+    {
+      // $id = $request->old('category_id');
+      // $sub_category_name = $request->old('sub_category_name');
+      return redirect()->back()->with('error', 'Sub-Category '.$request->sub_category_name.' already exist in ' .$request->category_id. ' Category' )->withInput();
+    } // ->withInput();
+
     $subcategory->show_on_menu = $request->show_on_menu;
+    $subcategory->show_on_home = $request->show_on_home;
     $subcategory->sub_category_order = $request->sub_category_order;
     $subcategory->update();
 

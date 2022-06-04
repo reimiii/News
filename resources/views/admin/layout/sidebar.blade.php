@@ -9,9 +9,19 @@
 
     <ul class="sidebar-menu">
 
-      <li class="{{ Request::is('admin') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_home') }}"><i
-            class="fas fa-hand-point-right"></i>
-          <span>Dashboard</span></a></li>
+      <li class="{{ Request::is('admin') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin_home') }}">
+          <i class="fas fa-hand-point-right"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="{{ Request::is('setting') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin_setting') }}">
+          <i class="fas fa-hand-point-right"></i>
+          <span>Setting</span>
+        </a>
+      </li>
 
       {{-- Ads --}}
       <li class="nav-item dropdown
