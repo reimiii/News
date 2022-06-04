@@ -38,44 +38,43 @@ class SubCategoryController extends Controller
       'show_on_menu.required' => 'Show on menu is required',
     ]);
 
-    // ngambil data order dari database validasi ulang
 
-    // $category_id = $request->input('category_id');
-    // $sub_category_order = $request->input('sub_category_order');
-
-    // $table = DB::table('sub_categories')
-    //     ->select('id')
-    //     ->where([['category_id', $category_id],
-    //     ['sub_category_order', $sub_category_order]])
-    //     ->first();
-
-    // if($table)
-    // {
-    //   return redirect()->back()->with('error', 'Order already exist');
-    // }
-
-    // DB::table('sub_categories')->insert();
 
     $subcategory = new SubCategory();
     $subcategory->category_id = $request->category_id;
     $subcategory->sub_category_order = $request->sub_category_order;
+    $subcategory->sub_category_name = $request->sub_category_name;
 
-    $check= SubCategory::where([['category_id', $request->category_id],
-    ['sub_category_order', $request->sub_category_order]])->first();
+    $check = SubCategory::where([
+      ['category_id', $request->category_id],
+      ['sub_category_order', $request->sub_category_order],
+    ])->first();
+
+    $check_name = SubCategory::where([
+      ['category_id', $request->category_id],
+      ['sub_category_name', $request->sub_category_name],
+      // ['id', '!=', $id],
+    ])->first();
 
     if($check)
     {
       $category_id = $request->old('category_id');
       $sub_category_order = $request->old('sub_category_order');
-      return redirect()->back()->with('error', 'Order already exist in '.$category_id.' category')->withInput();
+      return redirect()->back()
+        ->with('error', 'Sub-Category Order '.$request->sub_category_order.' already exist in Category Name')->withInput();
+
+    } elseif ($check_name) {
+      $sub_category_name = $request->old('sub_category_name');
+      return redirect()->back()
+        ->with('error', 'Sub-Category *'.$request->sub_category_name.'* already exist in Category Name ' )->withInput();
     }
 
-    $subcategory->sub_category_name = $request->sub_category_name;
+
     $subcategory->show_on_menu = $request->show_on_menu;
     $subcategory->show_on_home = $request->show_on_home;
     $subcategory->save();
 
-    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category created successfully');
+    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category '.$request->sub_category_name. ' created successfully');
 
   }
 
@@ -103,32 +102,43 @@ class SubCategoryController extends Controller
     $subcategory = SubCategory::where('id',$id)->first();
     $subcategory->category_id = $request->category_id;
     $subcategory->sub_category_name = $request->sub_category_name;
+    $subcategory->sub_category_order = $request->sub_category_order;
 
-    $check = SubCategory::where([
+    $check_name = SubCategory::where([
       ['category_id', $request->category_id],
       ['sub_category_name', $request->sub_category_name],
       ['id', '!=', $id],
     ])->first();
 
-    if($check)
+    $check = SubCategory::where([
+      ['category_id', $request->category_id],
+      ['sub_category_order', $request->sub_category_order],
+      ['id', '!=', $id],
+    ])->first();
+
+    if($check_name)
     {
-      // $id = $request->old('category_id');
-      // $sub_category_name = $request->old('sub_category_name');
-      return redirect()->back()->with('error', 'Sub-Category '.$request->sub_category_name.' already exist in ' .$request->category_id. ' Category' )->withInput();
-    } // ->withInput();
+
+      return redirect()->back()->with('error', 'Sub-Category *'.$request->sub_category_name.'* already exist in Category Order ' .$request->category_id )->withInput();
+
+    } elseif ($check) {
+
+      return redirect()->back()
+        ->with('error', 'Sub-Category Order '.$request->sub_category_order.' already exist in Category Name')
+        ->withInput();
+    }
 
     $subcategory->show_on_menu = $request->show_on_menu;
     $subcategory->show_on_home = $request->show_on_home;
-    $subcategory->sub_category_order = $request->sub_category_order;
     $subcategory->update();
 
-    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category updated successfully');
+    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category '.$request->sub_category_name.' updated successfully');
   }
 
   public function delete($id)
   {
     $subcategory = SubCategory::where('id',$id)->first();
     $subcategory->delete();
-    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category deleted successfully');
+    return redirect()->route('admin_sub_category_show')->with('success', 'Sub-Category '.$subcategory->sub_category_name.' deleted successfully');
   }
 }
