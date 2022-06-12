@@ -19,7 +19,7 @@
             <div class="form-group mb-3">
               <label>Existing Photo Ads</label>
               <div>
-                <img src="{{ asset('uploads/'.$side_ads->side_ad) }}" alt="" width="300px">
+                <img class="form-control" src="{{ asset('uploads/'.$side_ads->side_ad) }}" alt="" width="300px">
               </div>
             </div>
             <div class="form-group mb-3">

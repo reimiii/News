@@ -8,7 +8,9 @@
   <meta name="description" content="">
   <title>News</title>
 
-  <link rel="icon" type="image/png" href="{{ asset('uploads/favicon.png') }}">
+  {{--
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> --}}
+  <link rel="shortcut icon" href="{{ asset('uploads/Death_Note.ico') }}" type="image/x-icon">
 
 
   @include('front.layout.styles')

@@ -40,12 +40,12 @@
 
             <div class="form-group mb-3">
               <label>Post Category</label>
-              <select class="form-control" name="sub_category_id">
-                <option value="">Sub |=>| Category</option>
+              <select class="form-control select2" name="sub_category_id">
+                <option value="">Sub ( Category )</option>
                 @foreach($sub_category as $row)
                 <option value="{{ $row->id }}" @if ($row->id == $posts->sub_category_id) selected @endif>{{
-                  $row->sub_category_name }} => {{
-                  $row->rCategory->category_name }}
+                  $row->sub_category_name }} ( {{
+                  $row->rCategory->category_name }} )
                 </option>
                 @endforeach
               </select>

@@ -73,6 +73,13 @@
         </ul>
       </li>
 
+      <li class="{{ Request::is('admin/photo*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin_photo_show') }}">
+          <i class="fas fa-hand-point-right"></i>
+          <span>Photo</span>
+        </a>
+      </li>
+
 
 
 

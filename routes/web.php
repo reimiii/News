@@ -11,19 +11,24 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\PhotoController;
 
 // FrontRoute
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\NewsPostController;
+use App\Http\Controllers\Front\SubCatController;
+use App\Http\Controllers\Front\PController;
 
 // Depannya
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('about', [AboutController::class, 'index'])->name('about');
+Route::get('photo-gallery', [PController::class, 'index'])->name('photo_gallery');
 
 // detail
 Route::get('news/{id}', [NewsPostController::class, 'detail'])->name('news_detail');
+Route::get('category/{id}', [SubCatController::class, 'index'])->name('category');
 
 // end depannya
 
@@ -120,6 +125,14 @@ Route::middleware(['admin:admin'])->group(function () {
   Route::get('admin/post/tags/delete/{id}/{id1}', [PostController::class, 'tag_delete'])->name('admin_post_tag_delete');
 
 
+  // photo
+  Route::get('admin/photo', [PhotoController::class, 'show'])->name('admin_photo_show');
+  Route::get('admin/photo/create', [PhotoController::class, 'create'])->name('admin_photo_create');
+  Route::post('admin/photo/store', [PhotoController::class, 'store'])->name('admin_photo_store');
+  Route::get('admin/photo/edit/{id}', [PhotoController::class, 'edit'])->name('admin_photo_edit');
+  Route::post('admin/photo/update/{id}', [PhotoController::class, 'update'])->name('admin_photo_update');
+  Route::get('admin/photo/delete/{id}', [PhotoController::class, 'delete'])->name('admin_photo_delete');
+  // end photo
 
 
 });

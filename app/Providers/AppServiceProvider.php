@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Pagination\Paginator;
 use App\Models\TopAds;
 use App\Models\SideAds;
 
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+      Paginator::useBootstrap();
+
       $top_ads_data = TopAds::where('id', 1)->first();
       $side_top_data = SideAds::where('side_ad_location', 'Top')->get();
       $side_bottom_data = SideAds::where('side_ad_location', 'Bottom')->get();
