@@ -7,8 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\setting;
 
 
-class SettingSeeder extends Seeder
-{
+class SettingSeeder extends Seeder {
+
     /**
      * Run the database seeds.
      *
@@ -16,15 +16,18 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-      $category = [
-        [
-          'news_ticker_total' => '3',
-          'news_ticker_status' => 'Show',
-          'created_at' => date('Y-m-d H:i:s'),
-          'updated_at' => date('Y-m-d H:i:s'),
-        ]
-      ];
+        $category = [
+            [
+                'news_ticker_total'  => '3',
+                'news_ticker_status' => 'Show',
+                'video_total'        => '2',
+                'video_status'       => 'Show',
+                'created_at'         => date('Y-m-d H:i:s'),
+                'updated_at'         => date('Y-m-d H:i:s'),
+            ]
+        ];
 
-      setting::insert($category);
+        setting::insert($category);
     }
+
 }

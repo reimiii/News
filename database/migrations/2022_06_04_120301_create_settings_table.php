@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->text('news_ticker_total');
             $table->text('news_ticker_status');
+
+            $table->text('video_total');
+            $table->text('video_status');
             $table->timestamps();
         });
     }

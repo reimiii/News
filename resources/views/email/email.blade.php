@@ -7,7 +7,7 @@
 
 <body>
 
-  <p>{!! $body !!}</p>
+<p>{!! $body !!}</p>
 
 </body>
 
